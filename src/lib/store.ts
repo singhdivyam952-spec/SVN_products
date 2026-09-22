@@ -1,4 +1,5 @@
 import { promises as fs } from "fs";
+import { tmpdir } from "os";
 import path from "path";
 import { products as seedProducts, type ProductCategory } from "@/data/products";
 import { siteConfig } from "@/lib/site";
@@ -58,7 +59,9 @@ export type Store = {
   settings: StoreSettings;
 };
 
-const DATA_DIR = path.join(process.cwd(), "data");
+const DATA_DIR = process.env.VERCEL
+  ? path.join(tmpdir(), "svn-products")
+  : path.join(process.cwd(), "data");
 const STORE_PATH = path.join(DATA_DIR, "store.json");
 
 function now() {
