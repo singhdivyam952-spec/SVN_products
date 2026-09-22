@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SVN PRODUCT — LION Digital Catalog
 
-## Getting Started
+Premium B2B catalog website for **LION** wall hooks & hangers by **SVN PRODUCT** (Ludhiana).
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router) + TypeScript + Tailwind CSS
+- Inquiry emails via [Resend](https://resend.com) → `INFO.SVNPRODUCT@GMAIL.COM`
+
+## Develop
 
 ```bash
+cd web
+npm install
+cp .env.local.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Admin panel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login).
 
-## Learn More
+Default password (change in `.env.local`):
 
-To learn more about Next.js, take a look at the following resources:
+```
+ADMIN_PASSWORD=svnadmin2026
+AUTH_SECRET=replace-with-a-long-random-string
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Features:
+- Add / edit / delete products with photo upload
+- Publish / hide / feature on homepage
+- View wholesale inquiries
+- Edit company settings (About copy, WhatsApp, email)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Data is stored in `data/store.json`. Uploaded photos go to `public/uploads/`.
 
-## Deploy on Vercel
+## Email setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Create a Resend account and API key
+2. Set `RESEND_API_KEY` in `.env.local`
+3. Set `INQUIRY_TO_EMAIL=INFO.SVNPRODUCT@GMAIL.COM`
+4. Verify a sending domain (or use `onboarding@resend.dev` for tests)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Without `RESEND_API_KEY`, inquiries are logged in the server console (dev fallback).
+
+## WhatsApp
+
+Set `NEXT_PUBLIC_WHATSAPP_NUMBER` (E.164 without `+`, e.g. `9198XXXXXXXX`) for WhatsApp CTAs. Without it, the link falls back to email.
+
+## Content
+
+- Product data: `src/data/products.ts`
+- Company copy / partner: `src/lib/site.ts`
+- Product images: `public/products/` (from Lion Catalogue PDF)
